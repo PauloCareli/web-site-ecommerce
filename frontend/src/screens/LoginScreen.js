@@ -33,6 +33,8 @@ function LoginScreen({ history }) {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        console.log(email);
+        console.log(password);
         dispatch(login(email, password));
     };
     return (

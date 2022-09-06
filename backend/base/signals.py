@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 def updateUser(sender, instance, **kwargs):
     user = instance
+    print(user)
     if user.email != '':
         user.username = user.email
 

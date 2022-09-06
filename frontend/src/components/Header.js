@@ -6,11 +6,12 @@ import { logout } from "../actions/userActions";
 
 function Header() {
     const userLogin = useSelector((state) => state.userLogin);
-    const userInfo = userLogin;
+    const { userInfo } = userLogin;
 
     const dispatch = useDispatch();
 
     const logoutHandler = () => {
+        // console.log(userInfo.userName);
         dispatch(logout());
     };
     return (

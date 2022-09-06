@@ -22,7 +22,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         serializer = UserSerializerWithToken(self.user).data
 
         for key, value in serializer.items():
-            print(data[key])
             data[key] = value
 
         return data

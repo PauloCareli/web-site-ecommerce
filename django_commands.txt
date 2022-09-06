@@ -1,0 +1,12 @@
+django-admin startproject backend
+python manage.py startserver
+python manage.py runserver
+
+python manage.py startapp <app name>
+
+python manage.py createsuperuser
+
+python manage.py makemigrations
+python manage.py migrate
+
+manage.py test --pattern="*_test.py"

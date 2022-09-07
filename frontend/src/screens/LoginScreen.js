@@ -62,7 +62,7 @@ function LoginScreen({ history }) {
                         onChange={(e) => setPassword(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
-
+                <p></p>
                 <Button type="submit" variant="primary">
                     Sign In
                 </Button>

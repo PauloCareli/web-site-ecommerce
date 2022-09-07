@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import FormContainer from "../components/FormContainer";
-import { register } from "../actions/userActions";
+import { getUserDetails, updateUserProfile } from "../actions/userActions";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
-function RegisterScreen({ history }) {
+function ProfileScreen({ history }) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -18,16 +18,29 @@ function RegisterScreen({ history }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const redirect = location.search ? location.search.split("=")[1] : "/";
 
-    const userRegister = useSelector((state) => state.userRegister);
-    const { error, loading, userInfo } = userRegister;
+    const userDetails = useSelector((state) => state.userDetails);
+    const { error, loading, user } = userDetails;
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
+    const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+    const { success } = userUpdateProfile;
 
     useEffect(() => {
-        if (userInfo) {
-            navigate(redirect);
+        if (!userInfo) {
+            navigate("/login");
+        } else {
+            if (!user || !user.name || success) {
+                dispatch({ type: USER_UPDATE_PROFILE_RESET });
+                dispatch(getUserDetails("profile"));
+            } else {
+                setName(user.name);
+                setEmail(user.email);
+            }
         }
-    }, [history, userInfo, redirect]);
+    }, [dispatch, history, userInfo, user, success]);
     // useEffect(() => {
     //     if (userInfo) {
     //         history.push(redirect);
@@ -40,14 +53,24 @@ function RegisterScreen({ history }) {
         if (password != confirmPassword) {
             setMessage("Passwords don't match");
         } else {
+            dispatch(
+                updateUserProfile({
+                    _id: user._id,
+                    name: name,
+                    email: email,
+                    password: password,
+                })
+            );
+            setMessage("");
         }
-        dispatch(register(name, email, password));
+        // dispatch(register(name, email, password));
     };
 
     return (
-        <div>
-            <FormContainer>
-                <h1>Sign In</h1>
+        <Row>
+            <Col md={3}>
+                <h2>User Profile</h2>
+
                 {message && <Message variant="danger">{message}</Message>}
                 {error && <Message variant="danger">{error}</Message>}
                 {loading && <Loader />}
@@ -77,7 +100,6 @@ function RegisterScreen({ history }) {
                     <Form.Group controlId="password">
                         <Form.Label>Password</Form.Label>
                         <Form.Control
-                            required
                             type="password"
                             placeholder="Enter password"
                             value={password}
@@ -88,7 +110,6 @@ function RegisterScreen({ history }) {
                     <Form.Group controlId="passwordConfirm">
                         <Form.Label>Confirm password</Form.Label>
                         <Form.Control
-                            required
                             type="password"
                             placeholder="Confirm password"
                             value={confirmPassword}
@@ -96,22 +117,17 @@ function RegisterScreen({ history }) {
                         ></Form.Control>
                     </Form.Group>
                     <p></p>
+
                     <Button type="submit" variant="primary">
-                        Register
+                        Update
                     </Button>
                 </Form>
-
-                <Row className="py-3">
-                    <Col>
-                        Have an Account?
-                        <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-                            Sign In
-                        </Link>
-                    </Col>
-                </Row>
-            </FormContainer>
-        </div>
+            </Col>
+            <Col md={9}>
+                <h2>My Orders</h2>
+            </Col>
+        </Row>
     );
 }
 
-export default RegisterScreen;
+export default ProfileScreen;

@@ -28,3 +28,4 @@ backend/base/__pycache__/serializers.cpython-310.pyc
 backend/db.sqlite3
 backend/base/urls/__pycache__/order_urls.cpython-310.pyc
 backend/base/views/__pycache__/order_views.cpython-310.pyc
+backend/db.sqlite3

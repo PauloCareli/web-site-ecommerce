@@ -24,7 +24,7 @@ function LoginScreen({ history }) {
         if (userInfo) {
             navigate(redirect);
         }
-    }, [history, userInfo, redirect]);
+    }, [navigate, userInfo, redirect]);
     // useEffect(() => {
     //     if (userInfo) {
     //         history.push(redirect);
@@ -70,10 +70,7 @@ function LoginScreen({ history }) {
 
             <Row className="py-3">
                 <Col>
-                    New Customer?{" "}
-                    <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-                        Register
-                    </Link>
+                    New Customer? <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>Register</Link>
                 </Col>
             </Row>
         </FormContainer>

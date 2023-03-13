@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
 function ProductListScreen({ history, match }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation();
 
     const productList = useSelector((state) => state.productList);
     const { loading, error, products, pages, page } = productList;
@@ -31,7 +31,7 @@ function ProductListScreen({ history, match }) {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
-    let keyword = history.location.search;
+    let keyword = location.search;
     useEffect(() => {
         dispatch({ type: PRODUCT_CREATE_RESET });
 
@@ -44,7 +44,7 @@ function ProductListScreen({ history, match }) {
         } else {
             dispatch(listProducts(keyword));
         }
-    }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, keyword]);
+    }, [dispatch, navigate, userInfo, successDelete, successCreate, createdProduct, keyword]);
 
     const deleteHandler = (id) => {
         if (window.confirm("Are you sure you want to delete this product?")) {

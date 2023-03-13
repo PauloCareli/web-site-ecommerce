@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Form, Button, Card } from "react-bootstrap";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { PayPalButton } from "react-paypal-button-v2";
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from "../constants/orderConstants";
@@ -64,7 +64,7 @@ function OrderScreen({ match }) {
                 setSdkReady(true);
             }
         }
-    }, [dispatch, order, orderId, successPay, successDeliver]);
+    }, [navigate, userInfo, dispatch, order, orderId, successPay, successDeliver]);
 
     const successPaymentHandler = (paymentResult) => {
         //response from paypal

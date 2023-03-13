@@ -25,16 +25,9 @@ function LoginScreen({ history }) {
             navigate(redirect);
         }
     }, [navigate, userInfo, redirect]);
-    // useEffect(() => {
-    //     if (userInfo) {
-    //         history.push(redirect);
-    //     }
-    // }, [history, userInfo, redirect]);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(email);
-        console.log(password);
         dispatch(login(email, password));
     };
     return (

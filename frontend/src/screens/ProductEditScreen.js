@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useSearchParams, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
@@ -135,12 +135,13 @@ function ProductEditScreen({ match, history }) {
                                 onChange={(e) => setImage(e.target.value)}
                             ></Form.Control>
 
-                            <Form.File
+                            <Form.Control
+                                type="file"
                                 id="image-file"
                                 label="Choose File"
-                                custom
+                                custom="true"
                                 onChange={uploadFileHandler}
-                            ></Form.File>
+                            ></Form.Control>
                             {uploading && <Loader />}
                         </Form.Group>
 
@@ -183,6 +184,8 @@ function ProductEditScreen({ match, history }) {
                                 onChange={(e) => setDescription(e.target.value)}
                             ></Form.Control>
                         </Form.Group>
+
+                        <p></p>
 
                         <Button type="submit" variant="primary">
                             Update

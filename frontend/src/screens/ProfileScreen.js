@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
@@ -20,7 +20,6 @@ function ProfileScreen({ history }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
 
     const userDetails = useSelector((state) => state.userDetails);
     const { error, loading, user } = userDetails;
@@ -47,12 +46,7 @@ function ProfileScreen({ history }) {
                 setEmail(user.email);
             }
         }
-    }, [dispatch, history, userInfo, user, success]);
-    // useEffect(() => {
-    //     if (userInfo) {
-    //         history.push(redirect);
-    //     }
-    // }, [history, userInfo, redirect]);
+    }, [dispatch, navigate, userInfo, user, success]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -70,7 +64,6 @@ function ProfileScreen({ history }) {
             );
             setMessage("");
         }
-        // dispatch(register(name, email, password));
     };
 
     return (

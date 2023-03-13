@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Form, Button, Card } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import Message from "../components/Message";
@@ -17,16 +17,10 @@ function PlaceOrderScreen({ history }) {
     const { order, error, success } = orderCreate;
     const cart = useSelector((state) => state.cart);
 
-    cart.itemsPrice = cart.cartItems
-        .reduce((acc, item) => acc + item.price * item.qty, 0)
-        .toFixed(2);
+    cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
     cart.shippingPrice = (cart.itemsPrice > 100 ? 0 : 10).toFixed(2);
     cart.taxPrice = Number(0.082 * cart.itemsPrice).toFixed(2);
-    cart.totalPrice = (
-        Number(cart.itemsPrice) +
-        Number(cart.shippingPrice) +
-        Number(cart.taxPrice)
-    ).toFixed(2);
+    cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2);
 
     if (!cart.paymentMethod) {
         navigate("/payment");
@@ -37,7 +31,7 @@ function PlaceOrderScreen({ history }) {
             navigate(`/order/${order._id}`);
             dispatch({ type: ORDER_CREATE_RESET });
         }
-    }, [success, navigate]);
+    }, [success, navigate, dispatch, order]);
 
     const placeOrder = () => {
         dispatch(
@@ -51,7 +45,6 @@ function PlaceOrderScreen({ history }) {
                 totalPrice: cart.totalPrice,
             })
         );
-        console.log("Creating order");
     };
 
     return (
@@ -64,8 +57,7 @@ function PlaceOrderScreen({ history }) {
                             <h2>Shipping</h2>
                             <p>
                                 <strong>Shipping: </strong>
-                                {cart.shippingAddress.address},{" "}
-                                {cart.shippingAddress.city}
+                                {cart.shippingAddress.address}, {cart.shippingAddress.city}
                                 {"  "}
                                 {cart.shippingAddress.postalCode},{"  "}
                                 {cart.shippingAddress.country}.
@@ -90,23 +82,15 @@ function PlaceOrderScreen({ history }) {
                                         <ListGroup.Item key={index}>
                                             <Row>
                                                 <Col md={1}>
-                                                    <Image
-                                                        src={item.image}
-                                                        alt={item.name}
-                                                        fluid
-                                                        rounded
-                                                    />
+                                                    <Image src={item.image} alt={item.name} fluid rounded />
                                                 </Col>
 
                                                 <Col>
-                                                    <Link to={`/product/${item.product}`}>
-                                                        {item.name}
-                                                    </Link>
+                                                    <Link to={`/product/${item.product}`}>{item.name}</Link>
                                                 </Col>
 
                                                 <Col md={4}>
-                                                    {item.qty} X ${item.price} = $
-                                                    {(item.qty * item.price).toFixed(2)}
+                                                    {item.qty} X ${item.price} = ${(item.qty * item.price).toFixed(2)}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
@@ -152,9 +136,7 @@ function PlaceOrderScreen({ history }) {
                                 </Row>
                             </ListGroup.Item>
 
-                            <ListGroup.Item>
-                                {error && <Message variant="danger">{error}</Message>}
-                            </ListGroup.Item>
+                            <ListGroup.Item>{error && <Message variant="danger">{error}</Message>}</ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Button

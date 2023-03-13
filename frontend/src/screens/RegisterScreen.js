@@ -27,12 +27,7 @@ function RegisterScreen({ history }) {
         if (userInfo) {
             navigate(redirect);
         }
-    }, [history, userInfo, redirect]);
-    // useEffect(() => {
-    //     if (userInfo) {
-    //         history.push(redirect);
-    //     }
-    // }, [history, userInfo, redirect]);
+    }, [navigate, userInfo, redirect]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -104,9 +99,7 @@ function RegisterScreen({ history }) {
                 <Row className="py-3">
                     <Col>
                         Have an Account?
-                        <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-                            Sign In
-                        </Link>
+                        <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>Sign In</Link>
                     </Col>
                 </Row>
             </FormContainer>

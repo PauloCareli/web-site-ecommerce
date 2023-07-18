@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+    db:
+        image: postgres:13.7
+        restart: always
+        container_name: postgres
+        env_file:
+            - ./.envs/.env
+        volumes:
+            - ./data/:/var/lib/postgresql/data/
+        networks:
+            - webapp
+
+    backend: &backend
+        build:
+            context: ./backend/
+            dockerfile: ./Dockerfile
+        container_name: backend
+        env_file:
+            - ./.envs/.env
+        entrypoint: >
+            sh ./scripts/wait-for-postgres.sh 
+            sh -c "python3 manage.py migrate && 
+            python3 manage.py runserver 0.0.0.0:8000"
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./backend/apps:/usr/app/apps
+            - ./backend/utils:/usr/app/utils
+        networks:
+            - webapp
+        depends_on:
+            - db
+
+    frontend:
+        build:
+            context: ./frontend/
+            dockerfile: ./Dockerfile.dev
+        container_name: frontend
+        command: ["start"]
+        volumes:
+            - ./frontend/src/:/usr/app/src/
+            - ./frontend/public/:/usr/app/public/
+            - ./frontend/package.json:/usr/app/package.json
+            - ./frontend/package-lock.json:/usr/app/package-lock.json
+        networks:
+            - webapp
+        environment:
+            - NODE_ENV=development
+        ports:
+            - "3000:3000"
+        stdin_open: true
+
+networks:
+    webapp:
+        name: webapp

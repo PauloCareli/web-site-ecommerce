@@ -1,0 +1,19 @@
+FROM node:18-bullseye
+LABEL maintainer="Paulo Careli"
+
+ENV NODE_OPTIONS="--max_old_space_size=8192"
+ENV NODE_ENV=development
+ENV GENERATE_SOURCEMAP=false
+
+RUN apt update && apt install -y python3 libpango1.0-dev gcc
+
+WORKDIR /usr/app/
+
+COPY ./package.json ./
+RUN npm install --force
+RUN npm install react-paypal-button-v2 --force
+
+COPY ./ ./
+
+EXPOSE 3000
+ENTRYPOINT ["npm", "run"]

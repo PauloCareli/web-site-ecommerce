@@ -36,7 +36,6 @@ def getProducts(request):
 
     page = int(page)
     serializer = ProductSerializer(products, many=True)
-
     return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../services/axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -82,7 +82,7 @@ function ProductEditScreen({ match, history }) {
                 },
             };
 
-            const { data } = await axios.post("/api/products/upload/", formData, config);
+            const { data } = await axiosInstance.post("/api/products/upload/", formData, config);
 
             setImage(data);
             setUploading(false);
@@ -134,7 +134,7 @@ function ProductEditScreen({ match, history }) {
                                 value={image}
                                 onChange={(e) => setImage(e.target.value)}
                             ></Form.Control>
-
+                            <p></p>
                             <Form.Control
                                 type="file"
                                 id="image-file"
@@ -142,6 +142,7 @@ function ProductEditScreen({ match, history }) {
                                 custom="true"
                                 onChange={uploadFileHandler}
                             ></Form.Control>
+                            <p></p>
                             {uploading && <Loader />}
                         </Form.Group>
 

@@ -51,7 +51,7 @@ function CartScreen() {
                                     </Col>
                                     <Col md={2}>${item.price}</Col>
                                     <Col md={3}>
-                                        <Form.Control
+                                        <Form.Select
                                             as="select"
                                             value={item.qty}
                                             onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}
@@ -61,7 +61,7 @@ function CartScreen() {
                                                     {x + 1}
                                                 </option>
                                             ))}
-                                        </Form.Control>
+                                        </Form.Select>
                                     </Col>
                                     <Col md={1}>
                                         <Button

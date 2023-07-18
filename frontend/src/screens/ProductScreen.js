@@ -116,7 +116,7 @@ function ProductScreen({}) {
                                             <Row>
                                                 <Col>Qty</Col>
                                                 <Col xs="auto" className="my-1">
-                                                    <Form.Control
+                                                    <Form.Select
                                                         as="select"
                                                         value={qty}
                                                         onChange={(e) => setQty(e.target.value)}
@@ -126,7 +126,7 @@ function ProductScreen({}) {
                                                                 {x + 1}
                                                             </option>
                                                         ))}
-                                                    </Form.Control>
+                                                    </Form.Select>
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
@@ -173,7 +173,7 @@ function ProductScreen({}) {
                                         <Form onSubmit={submitHandler}>
                                             <Form.Group controlId="rating">
                                                 <Form.Label>Rating</Form.Label>
-                                                <Form.Control
+                                                <Form.Select
                                                     as="select"
                                                     value={rating}
                                                     onChange={(e) => setRating(e.target.value)}
@@ -184,7 +184,7 @@ function ProductScreen({}) {
                                                     <option value="3">3 - Good</option>
                                                     <option value="4">4 - Very Good</option>
                                                     <option value="5">5 - Excellent</option>
-                                                </Form.Control>
+                                                </Form.Select>
                                             </Form.Group>
 
                                             <Form.Group controlId="comment">
@@ -196,7 +196,7 @@ function ProductScreen({}) {
                                                     onChange={(e) => setComment(e.target.value)}
                                                 ></Form.Control>
                                             </Form.Group>
-
+                                            <p> </p>
                                             <Button disabled={loadingProductReview} type="submit" variant="primary">
                                                 Submit
                                             </Button>

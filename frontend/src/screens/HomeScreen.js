@@ -18,6 +18,7 @@ export function HomeScreen() {
     let keyword = location.search;
 
     useEffect(() => {
+        console.log(JSON.stringify(products));
         dispatch(listProducts(keyword));
     }, [dispatch, keyword]);
 

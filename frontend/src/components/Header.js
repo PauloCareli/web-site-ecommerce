@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +7,7 @@ import { logout } from "../actions/userActions";
 import SearchBox from "./SearchBox";
 
 function Header() {
+    const { id } = useParams();
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
@@ -25,8 +27,8 @@ function Header() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <SearchBox />
-                        <Nav className="mr-auto">
-                            <LinkContainer to="/cart">
+                        <Nav className="ms-auto">
+                            <LinkContainer to={`/cart/${id}/`}>
                                 <Nav.Link>
                                     <i className="fas fa-shopping-cart"></i>Cart
                                 </Nav.Link>

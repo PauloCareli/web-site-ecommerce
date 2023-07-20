@@ -42,7 +42,8 @@ To run this project locally, follow these steps:
 
 1. Clone this repository to your local machine.
 2. Navigate to the project directory.
-3. Install the dependencies using the package manager:
+3. Install docker.
+4. Install the dependencies using the package manager:
 
 ```bash
 npm install
@@ -75,7 +76,7 @@ POSTGRES_PORT=5432
 1. Start the development server:
 
 ```bash
-npm start
+docker-compose up --build
 ```
 
 The website will be accessible at http://localhost:3000.
